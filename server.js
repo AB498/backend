@@ -9,4 +9,6 @@ app.get("/version", (req, res) => {
   res.send("v3");
 });
 
-app.listen(8001);
+app.listen(8001, () => {
+  console.log(`Listening on http://localhost:${8001}`);
+});
