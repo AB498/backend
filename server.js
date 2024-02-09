@@ -3,7 +3,7 @@ let express = require("express");
 let app = express();
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.send("Hello World 2");
 });
 app.get("/version", (req, res) => {
   res.send("v3");
