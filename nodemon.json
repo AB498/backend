@@ -4,7 +4,7 @@
     ".git",
     "node_modules/**/node_modules"
   ],
-  "exec": "/home/ab498/node/bin/node /home/ab498/node_main_app/server.js",
+  "exec": "node server.js",
   "watch": [
     "**/*.js",
     "**/*.json"
