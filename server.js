@@ -10,6 +10,7 @@ app.get("/version", (req, res) => {
 });
 
 // host 0.0.0.0
-app.listen(8001, "0.0.0.0", () => {
-  console.log(`Listening on http://localhost:${8001}`);
+let port = 8000;
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Listening on http://localhost:${port}`);
 });
