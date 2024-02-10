@@ -151,7 +151,7 @@ app.post("/api/auth/login", async (req, res) => {
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
   if (!fetchedUser) return res.status(401).json({ message: "User not found" });
   if (fetchedUser.password != req.body.password) return res.status(401).json({ message: "Invalid credentials" });
-  let user = { ...fetchedUser, jwts: [...user.jwts, jwt.sign({ id: fetchedUser.id, email: user.email }, "secret")] };
+  let user = { ...fetchedUser, jwts: [...fetchedUser.jwts, jwt.sign({ id: fetchedUser.id, email: fetchedUser.email }, "secret")] };
   return res.json(user);
 });
 
