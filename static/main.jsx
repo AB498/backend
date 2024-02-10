@@ -601,7 +601,7 @@ let login = () => {
     return (
       <CustomModal open={open.current}>
         <div className="login">
-          <div>Login</div>
+          <div onClick={() => (open.current = false)}>Login</div>
         </div>
       </CustomModal>
     );
