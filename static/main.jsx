@@ -606,7 +606,8 @@ let login = () => {
           <div className="card-header">
             <div>Login</div>
           </div>
-          <div className="card-body">
+          <div className="card-body"></div>
+          <div className="card-footer">
             <div className="flex">
               <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
                 Login
