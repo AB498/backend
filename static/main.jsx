@@ -730,8 +730,7 @@ let login = () => {
                   authLogin();
                 }}
               >
-                Login
-                <div className="special-link">Registe</div>
+                Login | <div className="special-link">Register</div>
               </div>
               <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
                 Cancel
