@@ -1,8 +1,8 @@
 #!/bin/bash
 git_pull() {
     rm -rf .git/HEAD.lock .git/ORIG_HEAD* .git/refs/heads
-    git fetch --all > /dev/null
     LOCAL=$(git rev-parse origin/main)
+    git fetch --all > /dev/null
     REMOTE=$(git rev-parse origin/main)
     
     if [ $LOCAL != $REMOTE ]; then
