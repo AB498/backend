@@ -28,7 +28,7 @@ let app = express();
 
 const directoryPath = "./static";
 
-if (!fs.existsSync(__dirname + "/uploads")) fs.mkdirSync(__dirname + "/uploads");
+if (!fs.existsSync(__dirname + "../uploads")) fs.mkdirSync(__dirname + "../uploads");
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/", express.static(directoryPath));
 
