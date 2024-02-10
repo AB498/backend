@@ -597,10 +597,13 @@ let FeatureCard = (props) => {
 
 let login = () => {
   stateRef.current.modal = () => {
+    let open = stateRef.current.modal;
     return (
-      <div className="login">
-        <div>Login</div>
-      </div>
+      <CustomModal open={open.current}>
+        <div className="login">
+          <div>Login</div>
+        </div>
+      </CustomModal>
     );
   };
 };
