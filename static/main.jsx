@@ -732,11 +732,11 @@ let login = () => {
           <div className="card-footer">
             <div className="flex">
               {authType.current === "login" ? (
-                <div className="special-btn" onClick={() => authLogin}>
+                <div className="special-btn" onClick={authLogin}>
                   Login
                 </div>
               ) : (
-                <div className="special-btn" onClick={() => authRegister}>
+                <div className="special-btn" onClick={authRegister}>
                   Register
                 </div>
               )}
