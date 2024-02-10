@@ -158,9 +158,12 @@ async function downloadImageAsBlob(url) {
 let tryFetch = async (url, options = {}, log = false) => {
   options = {
     credentials: "include",
-    // headers: options?.method === 'GET' ? {} : {
-    //     'Content-Type': 'application/json',
-    // },
+    headers:
+      options?.method === "GET"
+        ? {}
+        : {
+            "Content-Type": "application/json",
+          },
     ...options,
   };
   let res;
