@@ -1,1 +1,91 @@
-Static
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+
+    <!-- faltui -->
+    <link rel="stylesheet"
+        href="https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/js/vendor/jquery.min.js"></script>
+
+
+    <!-- alert -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/alertify.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/AlertifyJS/1.13.1/css/alertify.css" />
+
+    <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
+    <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
+
+
+    <link rel="stylesheet" href="/index.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+            theme: {
+                extend: {
+                    colors: {
+                        "bg-primary": "var(--color-bg-primary)",
+                        "bg-secondary": "var(--color-bg-secondary)",
+                        "bg-tertiary": "var(--color-bg-tertiary)",
+                        "text-primary": "var(--color-text-primary)",
+                        "text-secondary": "var(--color-text-secondary)",
+                        "btn-primary": "var(--color-btn-primary)",
+                        "btn-secondary": "var(--color-btn-secondary)",
+                        success: "var(--color-success)",
+                        info: "var(--color-info)",
+                        warn: "var(--color-warn)",
+                        error: "var(--color-error)",
+                        transparent: "transparent",
+                        current: "currentColor",
+                    },
+                },
+            },
+            plugins: [],
+        }; // theme
+    </script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script crossorigin
+        src="https://cdnjs.cloudflare.com/ajax/libs/react-router-dom/5.1.2/react-router-dom.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Gabarito:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+    <script src="https://cdn.jsdelivr.net/npm/flexlayout-react@0.7.15/dist/flexlayout_min.min.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/flexlayout-react@0.7.15/style/dark.min.css" rel="stylesheet"> -->
+    <link href="https://cdn.jsdelivr.net/npm/flexlayout-react@0.7.15/style/light.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <script type="module">
+        // import { JSONEditor } from 'https://cdn.jsdelivr.net/npm/vanilla-jsoneditor/standalone.js'
+        // window.JSONEditor = JSONEditor;
+        import {faker} from 'https://cdn.skypack.dev/new/@faker-js/faker@v8.3.1/dist=es2019';
+        window.faker = faker;
+    </script>
+    <!-- <div class="loader loading fixed top-0 left-0 right-0 bottom-0 bg-white w-screen h-screen"></div> -->
+    <div class="">
+        <div id="root" class=""></div>
+    </div>
+    <script type="text/babel" src="/utils.js"></script>
+    <script type="text/babel" src="/components.jsx"></script>
+    <script type="text/babel" src="/main.jsx">
+    </script>
+</body>
+
+</html>
