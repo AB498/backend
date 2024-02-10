@@ -129,6 +129,7 @@ function parseFormDataBody(req, res, next) {
   req.body = JSON.parse(req.body.bodyString || "{}");
   next();
 }
+
 app.post("/api/auth/register", async (req, res) => {
   if (!req.body.email || !req.body.password) return res.status(401).json({ message: "All fields not provided" });
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
