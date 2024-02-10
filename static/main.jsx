@@ -688,13 +688,11 @@ let login = () => {
     ]);
 
     async function authLogin() {
-      console.log("authLogin", Object.fromEntries(formFields.current.map((item) => [item.name, item.value])));
+      let body = Object.fromEntries(formFields.current.map((item) => [item.name, item.value]));
+      console.log("authLogin", body);
       let res = await tryFetch("/api/auth/login", {
         method: "POST",
-        body: JSON.stringify({
-          email: formFields.current[0].value,
-          password: formFields.current[1].value,
-        }),
+        body: JSON.stringify(body),
       });
       stateRef.current.modal = null;
     }
