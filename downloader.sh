@@ -1,4 +1,5 @@
 #!/bin/bash
+
 git_pull() {
     # get local hash
     LOCAL=$(git rev-parse @)
