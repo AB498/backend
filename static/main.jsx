@@ -728,20 +728,23 @@ let login = () => {
               </div>
             </div>
           </div>
-          {authType.current === "login" ?<div className="card-body">  
-          <SpecialForm fields={formFields.current} /> 
-          </div> 
+          <div className="card-body">{authType.current === "login" ? <SpecialForm fields={formFields.current} /> : <SpecialForm fields={regFormFields.current} />}</div>
           <div className="card-footer">
             <div className="flex">
-              <div className="special-btn" onClick={() => authLogin}>
-                Login
-              </div>
+              {authType.current === "login" ? (
+                <div className="special-btn" onClick={() => authLogin}>
+                  Login
+                </div>
+              ) : (
+                <div className="special-btn" onClick={() => authRegister}>
+                  Register
+                </div>
+              )}
               <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
                 Cancel
               </div>
             </div>
           </div>
-          :<SpecialForm fields={regFormFields.current} />}
         </div>
       </CustomModal>
     );
