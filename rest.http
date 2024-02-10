@@ -1,0 +1,7 @@
+POST https://ab498.glitch.me/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "admin",
+    "password": "admin"
+}
