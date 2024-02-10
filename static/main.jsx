@@ -687,6 +687,18 @@ let login = () => {
       { name: "password", type: "input", placeholder: "Password" },
     ]);
 
+    async function authLogin() {
+      console.log("authLogin", Object.fromEntries(formFields.map((item) => [item.name, item.value])));
+      let res = await tryFetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: formFields.current[0].value,
+          password: formFields.current[1].value,
+        }),
+      });
+      stateRef.current.modal = null;
+    }
+
     return (
       <CustomModal open={true} onClose={() => (stateRef.current.modal = null)}>
         <div className="login card">
@@ -698,7 +710,12 @@ let login = () => {
           </div>
           <div className="card-footer">
             <div className="flex">
-              <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
+              <div
+                className="special-btn"
+                onClick={() => {
+                  authLogin();
+                }}
+              >
                 Login
               </div>
               <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
