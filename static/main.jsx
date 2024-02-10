@@ -682,10 +682,10 @@ let login = () => {
   stateRef.current.modal = () => {
     let open = stateRef.current.modal;
 
-    let formFields = [
+    let formFields = reactiveRef([
       { name: "email", type: "email", placeholder: "Email" },
       { name: "password", type: "password", placeholder: "Password" },
-    ];
+    ]);
 
     return (
       <CustomModal open={true}>
