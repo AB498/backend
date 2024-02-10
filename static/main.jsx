@@ -53,7 +53,7 @@ async function init() {
   window.initted = true;
   window.lastEdits = await (await fetch("/api/filesInfo")).json();
   setInterval(async () => {
-    window.lastEditsTmp = await (await fetch("/api.php")).json();
+    window.lastEditsTmp = await (await fetch("/api/filesInfo")).json();
     for (const [key, value] of Object.entries(window.lastEditsTmp)) {
       if (window.lastEdits[key] !== value) {
         console.log(key, "change", key, value, window.lastEdits[key]);
