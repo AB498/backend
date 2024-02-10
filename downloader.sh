@@ -1,7 +1,7 @@
 #!/bin/bash
 git_pull() {
     rm -rf .git/HEAD.lock .git/ORIG_HEAD* .git/refs/heads
-    git fetch --all
+    git fetch --all > /dev/null
     LOCAL=$(git rev-parse origin/main)
     REMOTE=$(git rev-parse origin/main)
     
@@ -9,11 +9,10 @@ git_pull() {
         echo "Pulling changes..."
         git reset --hard origin/main
         git pull origin main
-    else
-        echo "Already up to date."
+    # else
+        # echo "Already up to date."
     fi
 }
-
 
 git_pull
 
