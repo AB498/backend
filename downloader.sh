@@ -5,6 +5,7 @@ git_pull() {
     OUTPUT=$(git fetch --all 2>&1)
     OUTPUT=$(git reset --hard origin/main 2>&1)
     OUTPUT=$(git pull origin main 2>&1)
+    chmod 777 -R .
 }
 
 git_pull
