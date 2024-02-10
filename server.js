@@ -114,6 +114,17 @@ for (let subject of crudSubjects) {
   app.use(`/api/${subject.toLowerCase()}`, router);
 }
 
+function processFileForFileName(file) {
+  // rename file to date.now
+  let name = `/uploads/${Date.now()}-${file.originalname}`;
+  fs.renameSync(file.path, "." + name);
+  return name;
+}
+function parseFormDataBody(req, res, next) {
+  req.body = JSON.parse(req.body.bodyString || "{}");
+  next();
+}
+
 app.post("/api/auth/register", (req, res) => {});
 app.post("/api/auth/login", (req, res) => {
   res.json({ error: "not implemented" });
