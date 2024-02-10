@@ -51,7 +51,7 @@ function renderApp() {
 async function init() {
   if (window.initted) return;
   window.initted = true;
-  window.lastEdits = await (await fetch("/api.php")).json();
+  window.lastEdits = await (await fetch("/filesInfo")).json();
   setInterval(async () => {
     window.lastEditsTmp = await (await fetch("/api.php")).json();
     for (const [key, value] of Object.entries(window.lastEditsTmp)) {
