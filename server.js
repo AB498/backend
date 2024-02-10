@@ -40,6 +40,7 @@ app.use(
     credentials: true,
   })
 );
+
 app.use((err, req, res, next) => {
   console.error(err.message);
   console.error(err);
