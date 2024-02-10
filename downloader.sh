@@ -2,9 +2,9 @@
 
 git_pull() {
     rm -rf .git/HEAD.lock .git/ORIG_HEAD* .git/refs/heads > /dev/null
-    git fetch --all > /dev/null
-    git reset --hard origin/main > /dev/null
-    git pull origin main > /dev/null
+    OUTPUT=$(git fetch --all 2>&1)
+    OUTPUT=$(git reset --hard origin/main 2>&1)
+    OUTPUT=$(git pull origin main 2>&1)
 }
 
 git_pull
@@ -12,6 +12,6 @@ git_pull
 npx nodemon &
 
 while true; do
-    sleep 0
+    sleep 1
     git_pull > /dev/null
 done
