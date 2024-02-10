@@ -42,6 +42,11 @@ app.get("/api/filesInfo", (req, res) => {
   res.json(lastEditedTimes);
 });
 
+api.get("/api/auth/register", (req, res) => {});
+api.get("/api/auth/login", (req, res) => {
+  res.json({ error: "not implemented" });
+});
+
 app.get("*", (req, res) => {
   //spa
   res.sendFile(__dirname + "/static/index.html");
