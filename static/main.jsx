@@ -33,6 +33,7 @@ let factory = (node) => {
   }
   return <div>No Layout Matched</div>;
 };
+
 let FLayout = () => {
   return <TheFlexLayout model={model} factory={factory} />;
 };
