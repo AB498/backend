@@ -104,6 +104,10 @@ for (let subject of crudSubjects) {
     res.json(updated);
   });
 
+  router.get("/reset", async (req, res) => {
+    const deleted = await model.destroy({ where: {} });
+    res.json(deleted);
+  });
   router.delete("/", async (req, res) => {
     const deleted = await model.destroy({ where: {} });
     res.json(deleted);
