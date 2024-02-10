@@ -24,3 +24,4 @@ while true; do
     sleep 1
     git_pull
 done
+
