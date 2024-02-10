@@ -139,6 +139,7 @@ app.post("/api/auth/register", async (req, res) => {
   await user.save();
   return res.json(user);
 });
+
 app.post("/api/auth/login", async (req, res) => {
   if (!req.body.email || !req.body.password) return res.status(401).json({ message: "All fields not provided" });
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
