@@ -717,7 +717,7 @@ let login = () => {
       <CustomModal open={true} onClose={() => (stateRef.current.modal = null)}>
         <div className="login card">
           <div className="card-header">
-            <div>
+            <div className="flex">
               <div className="special-link">Login</div> | <div className="special-link">Register</div>
             </div>
           </div>
