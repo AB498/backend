@@ -124,7 +124,6 @@ function parseFormDataBody(req, res, next) {
   req.body = JSON.parse(req.body.bodyString || "{}");
   next();
 }
-
 app.post("/api/auth/register", (req, res) => {});
 app.post("/api/auth/login", (req, res) => {
   res.json({ error: "not implemented" });
