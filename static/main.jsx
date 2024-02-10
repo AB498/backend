@@ -686,7 +686,7 @@ let ProductTopNav = (props) => {
           Home
         </div>
         <div className="special-link" onClick={() => navigate("/discover")}>
-          Discover
+          Discoverddd
         </div>
         <div className="special-link" onClick={() => navigate("/hot")}>
           Hot
