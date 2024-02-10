@@ -328,7 +328,7 @@ let CustomModal = ({ open, onClose, children }) => {
     domReady &&
     ReactDOM.createPortal(
       show ? (
-        <div className={`${show ? "block" : "hidden"} grid place-items-center fixed top-0 left-0 z-50 h-screen w-screen bg-black/25 dark:bg-white/25 overscroll-none overflow-auto `} onClick={() => (show = false)}>
+        <div className={`${show ? "block" : "hidden"} grid place-items-center fixed top-0 left-0 z-50 h-screen w-screen bg-black/25 dark:bg-white/25 overscroll-none overflow-auto `} onClick={() => onClose && onClose(open)}>
           {Array.isArray(children) ? (
             children.map((item, index) => {
               return <item.type {...item.props} key={index} onClick={(e) => e.stopPropagation()} />;
