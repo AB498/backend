@@ -41,6 +41,7 @@ app.use(
   })
 );
 app.use((err, req, res, next) => {
+  console.error(err.message);
   console.error(err);
   res.status(500).json({ message: err.message, stack: err.stack });
 });
