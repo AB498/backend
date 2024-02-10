@@ -717,7 +717,9 @@ let login = () => {
       <CustomModal open={true} onClose={() => (stateRef.current.modal = null)}>
         <div className="login card">
           <div className="card-header">
-            <div>Login</div>
+            <div>
+              Login | <div className="special-link">Register</div>
+            </div>
           </div>
           <div className="card-body">
             <SpecialForm fields={formFields.current} />
@@ -730,7 +732,7 @@ let login = () => {
                   authLogin();
                 }}
               >
-                Login | <div className="special-link">Register</div>
+                Login
               </div>
               <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
                 Cancel
