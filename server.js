@@ -9,7 +9,7 @@ const directoryPath = "./static";
 app.use("/", express.static(directoryPath));
 
 app.get("/version", (req, res) => {
-  res.send("v5");
+  res.send("v6");
 });
 
 app.get("/api/filesInfo", (req, res) => {
