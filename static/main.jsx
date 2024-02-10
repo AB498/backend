@@ -53,9 +53,9 @@ async function init() {
   window.initted = true;
   window.lastEdits = await (await fetch("/api/filesInfo")).json();
 
-  window.lastModified = Object.entries(window.lastEdits).reduce((a, b) => (new Date(a) > new Date(b[1]) ? a : b[1]), 0);
   setInterval(async () => {
     window.lastEditsTmp = await (await fetch("/api/filesInfo")).json();
+    window.lastModified = Object.entries(window.lastEditsTmp).reduce((a, b) => (new Date(a) > new Date(b[1]) ? a : b[1]), 0);
     for (const [key, value] of Object.entries(window.lastEditsTmp)) {
       if (window.lastEdits[key] !== value) {
         console.log(key, "change", key, value, window.lastEdits[key]);
