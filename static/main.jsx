@@ -602,7 +602,7 @@ let login = () => {
     let open = stateRef.current.modal;
     return (
       <CustomModal open={true}>
-        <div className="login">
+        <div className="login card">
           <div onClick={() => (stateRef.current.modal = null)}>Login</div>
         </div>
       </CustomModal>
