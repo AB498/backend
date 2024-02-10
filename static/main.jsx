@@ -109,7 +109,6 @@ let Layout = ({ children }) => {
         }}
       />
       {children}
-
       <div className={`flex center w-full text-blue-200 ${persist.admin ? "bg-black" : "bg-red-600"}`}>
         <div className="special-link p-0 font-mono" onClick={() => (persist.admin = !persist.admin)}>
           Admin {faker.number.int({ min: 0, max: 9 })} {new Date(window.lastModified).toLocaleString()}
