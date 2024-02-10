@@ -5,7 +5,7 @@ let app = express();
 app.use("/", express.static("/static"));
 
 app.get("/", (req, res) => {
-  res.send("Hello World 2");
+  res.send("Hello World 4");
 });
 app.get("/version", (req, res) => {
   res.send("v3");
