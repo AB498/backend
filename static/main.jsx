@@ -733,9 +733,7 @@ let login = () => {
             <div className="flex">
               <div
                 className="special-btn"
-                onClick={() => {
-                  authLogin();
-                }}
+                onClick={() => {authLogin}
               >
                 Login
               </div>
