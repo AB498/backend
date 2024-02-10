@@ -686,6 +686,7 @@ let login = () => {
       { name: "email", type: "email", placeholder: "Email" },
       { name: "password", type: "password", placeholder: "Password" },
     ];
+
     return (
       <CustomModal open={true}>
         <div className="login card">
