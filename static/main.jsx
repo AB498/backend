@@ -694,7 +694,7 @@ let login = () => {
             <div>Login</div>
           </div>
           <div className="card-body">
-            <SpecialForm fields={formFields} />
+            <SpecialForm fields={formFields.current} />
           </div>
           <div className="card-footer">
             <div className="flex">
