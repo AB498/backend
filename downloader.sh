@@ -22,5 +22,5 @@ npx nodemon &
 
 while true; do
     sleep 1
-    git_pull > /dev/null
+    git_pull
 done
