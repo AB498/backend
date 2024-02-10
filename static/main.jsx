@@ -683,8 +683,8 @@ let login = () => {
     let open = stateRef.current.modal;
 
     let formFields = reactiveRef([
-      { name: "email", type: "input", placeholder: "Email" },
-      { name: "password", type: "input", placeholder: "Password" },
+      { name: "email", type: "input" },
+      { name: "password", type: "input" },
     ]);
 
     async function authLogin() {
