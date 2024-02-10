@@ -117,20 +117,7 @@ let Layout = ({ children }) => {
         </div>
       </div>
 
-      <div className="flex p-2 justify-center">
-        <div className="special-link" onClick={() => navigate("/home")}>
-          Home
-        </div>
-        <div className="special-link" onClick={() => navigate("/categories")}>
-          Categories
-        </div>
-        <div className="special-link" onClick={() => navigate("/offers")}>
-          Offers
-        </div>
-        <div className="special-link" onClick={() => navigate("/latest")}>
-          Latest
-        </div>
-      </div>
+     
 
       <div className="main-div full col">
         <Switch>
