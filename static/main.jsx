@@ -607,8 +607,14 @@ let login = () => {
             <div>Login</div>
           </div>
           <div className="card-body">
-            <div onClick={() => (stateRef.current.modal = null)}>Login</div>
-            <div onClick={() => (stateRef.current.modal = null)}>Cancel</div>
+            <div className="flex">
+              <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
+                Login
+              </div>
+              <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
+                Cancel
+              </div>
+            </div>
           </div>
         </div>
       </CustomModal>
