@@ -118,7 +118,20 @@ let Layout = ({ children }) => {
         </div>
       </div>
 
-     
+      <div className="flex p-2 justify-center">
+        <div className="special-link" onClick={() => navigate("/home")}>
+          Home
+        </div>
+        <div className="special-link" onClick={() => navigate("/categories")}>
+          Categories
+        </div>
+        <div className="special-link" onClick={() => navigate("/offers")}>
+          Offers
+        </div>
+        <div className="special-link" onClick={() => navigate("/latest")}>
+          Latest
+        </div>
+      </div>
 
       <div className="main-div full col">
         <Switch>
@@ -652,7 +665,7 @@ let ProductTopNav = (props) => {
             </a>
           </div>
           <div className="relative flex">
-            <input type="text" className="w-full py-2 px-4 border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:border-primary" placeholder="Search..." />
+            <input type="text" className="w-full py-2 px-4 border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:border-primary" placeholder="Search for products" />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 ">
               <i className="fa fa-search"></i>
             </div>
