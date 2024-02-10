@@ -718,7 +718,11 @@ let login = () => {
         <div className="login card">
           <div className="card-header">
             <div className="flex center">
-              <div className="special-link p-0">Login</div> <span>|</span> <div className="special-link p-0">Register</div>
+              <div className="special-link p-0" onClick={() => (authType.current = "login")}>
+                Login
+              </div>
+              <span>|</span>
+              <div className="special-link p-0">Register</div>
             </div>
           </div>
           <div className="card-body">
