@@ -728,7 +728,9 @@ let login = () => {
               </div>
             </div>
           </div>
-          <div className="card-body">{authType.current === "login" ? <SpecialForm fields={formFields.current} /> : <SpecialForm fields={regFormFields.current} />}</div>
+          {authType.current === "login" ?<div className="card-body">  
+          <SpecialForm fields={formFields.current} /> 
+          </div> 
           <div className="card-footer">
             <div className="flex">
               <div className="special-btn" onClick={() => authLogin}>
@@ -739,6 +741,7 @@ let login = () => {
               </div>
             </div>
           </div>
+          :<SpecialForm fields={regFormFields.current} />}
         </div>
       </CustomModal>
     );
