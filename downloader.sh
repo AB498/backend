@@ -5,7 +5,7 @@ git_pull() {
     OUTPUT=$(git fetch --all 2>&1)
     # get remote hash
     REMOTE=$(git ls-remote --heads origin main | cut -f1)
-    echo "$LOCAL\\n$REMOTE"
+    echo "$LOCAL - $REMOTE"
     if [ "$LOCAL" != "$REMOTE" ]; then
         echo "git pull"
         rm -rf .git/HEAD.lock .git/ORIG_HEAD* .git/refs/heads > /dev/null
