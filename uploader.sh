@@ -11,6 +11,6 @@ git_push() {
 git_push
 
 while true; do
-    sleep 5
+    sleep 1
     git_push
 done
