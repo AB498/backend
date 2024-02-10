@@ -654,7 +654,7 @@ let ProductTopNav = (props) => {
             </a>
           </div>
           <div className="relative flex">
-            <input type="text" className="w-full py-2 px-4 border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:border-primary" placeholder="Search for products" />
+            <input type="text" className="w-full py-2 px-4 border border-gray-300 rounded-md placeholder-gray-500 focus:outline-none focus:border-primary" placeholder="Search..." />
             <div className="absolute inset-y-0 right-0 flex items-center pr-3 ">
               <i className="fa fa-search"></i>
             </div>
