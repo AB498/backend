@@ -125,7 +125,14 @@ function parseFormDataBody(req, res, next) {
   req.body = JSON.parse(req.body.bodyString || "{}");
   next();
 }
-app.post("/api/auth/register", (req, res) => {});
+app.post("/api/auth/register", async (req, res) => {
+  let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
+  if (fetchedUser) return res.status(401).json({ message: "User already exists" });
+  if (!req.body.email || !req.body.password) return res.status(401).json({ message: "All fields not provided" });
+  let user = new models.User(req.body);
+  await user.save();
+  return res.json(user);
+});
 app.post("/api/auth/login", async (req, res) => {
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
   if (!fetchedUser) return res.status(401).json({ message: "User not found" });
