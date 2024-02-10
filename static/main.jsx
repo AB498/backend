@@ -601,9 +601,9 @@ let login = () => {
   stateRef.current.modal = () => {
     let open = stateRef.current.modal;
     return (
-      <CustomModal open={open.current}>
+      <CustomModal open={true}>
         <div className="login">
-          <div onClick={() => (open.current = false)}>Login</div>
+          <div onClick={() => (stateRef.current.modal = null)}>Login</div>
         </div>
       </CustomModal>
     );
