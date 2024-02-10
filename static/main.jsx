@@ -680,6 +680,7 @@ let SpecialForm = ({ fields }) => {
 };
 let login = () => {
   stateRef.current.modal = () => {
+    let authType = reactiveRef("login");
     let open = stateRef.current.modal;
 
     let formFields = reactiveRef([
