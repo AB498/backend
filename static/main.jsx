@@ -686,11 +686,26 @@ let login = () => {
       { name: "email", type: "input" },
       { name: "password", type: "input" },
     ]);
+    let regFormFields = reactiveRef([
+      { name: "name", type: "input" },
+      { name: "email", type: "input" },
+      { name: "password", type: "input" },
+    ]);
 
     async function authLogin() {
       let body = Object.fromEntries(formFields.current.map((item) => [item.name, item.value]));
       console.log("authLogin", body);
       let res = await tryFetch("/api/auth/login", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+      cons(res);
+      stateRef.current.modal = null;
+    }
+    async function authRegister() {
+      let body = Object.fromEntries(regFormFields.current.map((item) => [item.name, item.value]));
+      console.log("authRegister", body);
+      let res = await tryFetch("/api/auth/register", {
         method: "POST",
         body: JSON.stringify(body),
       });
@@ -716,6 +731,7 @@ let login = () => {
                 }}
               >
                 Login
+                <div className="special-link">Registe</div>
               </div>
               <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
                 Cancel
