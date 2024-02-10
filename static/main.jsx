@@ -608,6 +608,7 @@ let login = () => {
           </div>
           <div className="card-body">
             <div onClick={() => (stateRef.current.modal = null)}>Login</div>
+            <div onClick={() => (stateRef.current.modal = null)}>Cancel</div>
           </div>
         </div>
       </CustomModal>
