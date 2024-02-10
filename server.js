@@ -1,13 +1,48 @@
-let express = require("express");
-let fs = require("fs");
-let path = require("path");
+const models = require("./models");
+const fs = require("fs");
+const path = require("path");
+const cors = require("cors");
+const express = require("express");
+const multer = require("multer");
+
+function uuid() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    var r = (Math.random() * 16) | 0,
+      v = c == "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "./uploads");
+    },
+    filename: function (req, file, cb) {
+      cb(null, uuid() + path.extname(file.originalname));
+    },
+  }),
+});
 
 let app = express();
 
 const directoryPath = "./static";
 
+if (!fs.existsSync(__dirname + "/uploads")) fs.mkdirSync(__dirname + "/uploads");
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/", express.static(directoryPath));
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: ["http://localhost", "http://127.0.0.1", "http://127.0.0.1:3000", "http://127.0.0.1:3001", "http://localhost:3000", "http://localhost:3001", "http://localhost:8080", "http://localhost:5173"], // 5173 is the vite dev server port
+    credentials: true,
+  })
+);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: err.message, stack: err.stack });
+});
 app.get("/version", (req, res) => {
   res.send("v8");
 });
@@ -41,6 +76,43 @@ app.get("/api/filesInfo", (req, res) => {
   const lastEditedTimes = getLastEditedTimes(directoryPath);
   res.json(lastEditedTimes);
 });
+
+crudSubjects = ["User", "Product"];
+
+for (let subject of crudSubjects) {
+  const model = models[subject];
+  const router = express.Router();
+  router.get("/", async (req, res) => res.json(await model.findAll({})));
+  router.get("/:id", async (req, res) => res.json(await model.findOne({ where: { id: req.params.id } })));
+  router.post("/", upload.array("files", 10), parseFormDataBody, async (req, res) => {
+    // console.log('files', req.files.map(i => i.filename));
+    console.log("files", req.body);
+    let processedFiles = req.files.map(processFileForFileName);
+    const newItem = new model({
+      ...req.body,
+      avatar: processedFiles[0],
+      images: processedFiles,
+    });
+    let added = (await newItem.save()).get({ plain: true });
+    // console.log('added', added);
+    res.json(added);
+  });
+
+  router.patch("/:id", async (req, res) => {
+    const updated = await model.update(req.body, { where: { id: req.params.id } });
+    res.json(updated);
+  });
+
+  router.delete("/", async (req, res) => {
+    const deleted = await model.destroy({ where: {} });
+    res.json(deleted);
+  });
+  router.delete("/:id", async (req, res) => {
+    const deleted = await model.destroy({ where: { id: req.params.id } });
+    res.json(deleted);
+  });
+  app.use(`/api/${subject.toLowerCase()}`, router);
+}
 
 app.post("/api/auth/register", (req, res) => {});
 app.post("/api/auth/login", (req, res) => {
