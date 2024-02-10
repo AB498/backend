@@ -613,7 +613,9 @@ let FeatureCard = (props) => {
 let login; =()=>{
   state.modal = ()=>{
     return (
-      <div className="login">Login</div>
+      <div className="login">
+        <div>Login</div>
+      </div>
     )
   }
 }
