@@ -41,7 +41,7 @@ app.use(
   })
 );
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  console.error(err);
   res.status(500).json({ message: err.message, stack: err.stack });
 });
 app.get("/version", (req, res) => {
