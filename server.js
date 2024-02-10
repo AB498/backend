@@ -42,8 +42,8 @@ app.get("/api/filesInfo", (req, res) => {
   res.json(lastEditedTimes);
 });
 
-api.get("/api/auth/register", (req, res) => {});
-api.get("/api/auth/login", (req, res) => {
+app.get("/api/auth/register", (req, res) => {});
+app.get("/api/auth/login", (req, res) => {
   res.json({ error: "not implemented" });
 });
 
