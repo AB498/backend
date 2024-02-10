@@ -688,7 +688,7 @@ let login = () => {
     ]);
 
     return (
-      <CustomModal open={true}>
+      <CustomModal open={true} onClose={() => (stateRef.current.modal = null)}>
         <div className="login card">
           <div className="card-header">
             <div>Login</div>
