@@ -129,7 +129,8 @@ app.post("/api/auth/register", async (req, res) => {
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
   if (fetchedUser) return res.status(401).json({ message: "User already exists" });
   if (!req.body.email || !req.body.password) return res.status(401).json({ message: "All fields not provided" });
-  let user = new models.User(req.body);
+  let user = new models.User({req.body});
+  user.jwts =[jwt.sign({ id: Date.now() }, "secret")];
   await user.save();
   return res.json(user);
 });
