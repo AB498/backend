@@ -127,7 +127,7 @@ function parseFormDataBody(req, res, next) {
 }
 app.post("/api/auth/register", (req, res) => {});
 app.post("/api/auth/login", async (req, res) => {
-  let fetchedUser = await models.User.findOne({ where: { email: req.body.email } });
+  let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
   if (!fetchedUser) return res.status(401).json({ message: "Invalid credentials" });
   if (fetchedUser.password != req.body.password) return res.status(401).json({ message: "Invalid credentials" });
   let user = { ...fetchedUser, jwts: [...user.jwts, jwt.sign({ id: fetchedUser.id }, "secret")] };
