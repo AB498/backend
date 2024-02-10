@@ -597,16 +597,104 @@ let FeatureCard = (props) => {
   );
 };
 
+let SpecialSelect = ({ item }) =>
+  ((!item.value && (item.value = item.data.options[0].value || item.data.options[0])) || 1) && (
+    <div className="col my-2" key={item.name}>
+      <label className=" block text-base font-medium text-[#07074D]">{item.name.toTitleCase()}</label>
+      <select
+        className="special-input w-full"
+        value={item.value}
+        onChange={(e) => {
+          item.value = e.target.value;
+        }}
+      >
+        {item.data.options?.map((option, index) => (
+          <option key={index} value={option.value || option}>
+            {option.label || option}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+
+let SpecialInput = ({ item }) => (
+  <div className="col my-2" key={item.name}>
+    <label className=" block text-base font-medium text-[#07074D]">{item.name.toTitleCase()}</label>
+    <input
+      type="text"
+      className="special-input w-full"
+      placeholder={item.name}
+      value={item.value}
+      onChange={(e) => {
+        item.value = e.target.value;
+      }}
+    />
+  </div>
+);
+
+let SpecialInputFiles = ({ item }) => (
+  <div className="col my-2" key={item.name}>
+    <label className=" block text-base font-medium text-[#07074D]">{item.name.toTitleCase()}</label>
+    <div className="flex flex-wrap ">
+      {item.value?.map((image, index) => (
+        <div className="basis-1/2 aspect-video border relative group hover:visible">
+          <img key={index} className="full aspect-video object-cover rounded " src={URL.createObjectURL(image)} alt="user avatar" />
+          <div className="center bottom-0 w-full h-8 absolute bg-slate-500/50 text-whites invisible group-hover:visible">
+            <i
+              className="fi fi-rr-trash cursor-pointer"
+              onClick={() => {
+                item.value.splice(index, 1);
+              }}
+            ></i>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div
+      className="col center border-slate-400 border-2 border-dashed rounded-xl p-3 cursor-pointer bg-slate-200"
+      onClick={async () => {
+        item.value = [...(item.value || []), ...(await window.getFilesUpload())];
+      }}
+    >
+      <div className="text-lg">Drag and drop </div>
+      <div className="text-sm">or click to select</div>
+      <i className="fas fa-cloud-upload-alt"></i>
+    </div>
+  </div>
+);
+
+let SpecialForm = ({ fields }) => {
+  return (
+    <div>
+      {fields.map((item, index) => {
+        if (item.type === "select") {
+          return <SpecialSelect item={item} key={index} />;
+        } else if (item.type === "input") {
+          return <SpecialInput item={item} key={index} />;
+        } else if (item.type === "input-files") {
+          return <SpecialInputFiles item={item} key={index} />;
+        }
+      })}
+    </div>
+  );
+};
 let login = () => {
   stateRef.current.modal = () => {
     let open = stateRef.current.modal;
+
+    let formFields = [
+      { name: "email", type: "email", placeholder: "Email" },
+      { name: "password", type: "password", placeholder: "Password" },
+    ];
     return (
       <CustomModal open={true}>
         <div className="login card">
           <div className="card-header">
             <div>Login</div>
           </div>
-          <div className="card-body"></div>
+          <div className="card-body">
+            <SpecialForm fields={formFields} />
+          </div>
           <div className="card-footer">
             <div className="flex">
               <div className="special-btn" onClick={() => (stateRef.current.modal = null)}>
