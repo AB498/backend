@@ -13,6 +13,6 @@ git_pull
 npx nodemon &
 
 while true; do
-    sleep 1
+    sleep 0
     git_pull
 done
