@@ -1,7 +1,7 @@
 #!/bin/bash
 git_pull() {
     # get local hash
-    LOCAL=$(git rev-parse origin/main)
+    LOCAL=$(git rev-parse @)
     OUTPUT=$(git fetch --all 2>&1)
     # get remote hash
     REMOTE=$(git rev-parse main)
