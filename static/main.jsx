@@ -718,7 +718,7 @@ let login = () => {
         <div className="login card">
           <div className="card-header">
             <div>
-              <div className="special-link">Register</div> |<div className="special-link">Register</div>
+              <div className="special-link">Login</div> | <div className="special-link">Register</div>
             </div>
           </div>
           <div className="card-body">
