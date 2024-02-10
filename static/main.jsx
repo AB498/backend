@@ -694,6 +694,7 @@ let login = () => {
         method: "POST",
         body: JSON.stringify(body),
       });
+      cons(res);
       stateRef.current.modal = null;
     }
 
