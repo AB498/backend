@@ -676,7 +676,7 @@ let ProductTopNav = (props) => {
               <i className="fi fi-rr-user mr-2 flex"></i>Register
             </a>
             <a className="flex text-gray-600 cursor-pointer transition-colors duration-300 font-semibold text-blue-600 center" onClick={() => login()}>
-              <i className="fi fi-rr-lock mr-2 flex"></i>Login
+              <i className="fi fi-rr-lock mr-2 flex"></i>Logins
             </a>
           </div>
           <div className="flex gap-2">
