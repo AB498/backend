@@ -137,7 +137,11 @@ app.post("/api/auth/register", async (req, res) => {
   if (fetchedUser) return res.status(401).json({ message: "User already exists" });
   let user = new models.User(req.body);
   user.jwts = [jwt.sign({ id: user.id, email: user.email }, "secret")];
-  await user.save();
+  try {
+    await user.save();
+  } catch (err) {
+    console.log(err);
+  }
   return res.json(user);
 });
 
