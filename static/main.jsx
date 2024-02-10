@@ -611,7 +611,7 @@ let FeatureCard = (props) => {
 };
 
 let login = () => {
-  state.modal = () => {
+  stateRef.current.modal = () => {
     return (
       <div className="login">
         <div>Login</div>
