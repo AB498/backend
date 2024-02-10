@@ -610,15 +610,15 @@ let FeatureCard = (props) => {
   );
 };
 
-let login; =()=>{
-  state.modal = ()=>{
+let login = () => {
+  state.modal = () => {
     return (
       <div className="login">
         <div>Login</div>
       </div>
-    )
-  }
-}
+    );
+  };
+};
 
 let ProductTopNav = (props) => {
   return (
