@@ -12,7 +12,7 @@ app.get("/version", (req, res) => {
   res.send("v4");
 });
 
-app.get("/api/filesInfo", (req, res) => {
+app.get(["/api/filesInfo", "/api.php], (req, res) => {
   // Function to get last edited time for each file recursively
   const result = {};
   function getLastEditedTimes(dir, baseDir = "/") {
