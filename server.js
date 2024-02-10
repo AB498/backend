@@ -130,15 +130,16 @@ function parseFormDataBody(req, res, next) {
   next();
 }
 app.post("/api/auth/register", async (req, res) => {
+  if (!req.body.email || !req.body.password) return res.status(401).json({ message: "All fields not provided" });
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
   if (fetchedUser) return res.status(401).json({ message: "User already exists" });
-  if (!req.body.email || !req.body.password) return res.status(401).json({ message: "All fields not provided" });
   let user = new models.User(req.body);
   user.jwts = [jwt.sign({ id: user.id, email: user.email }, "secret")];
   await user.save();
   return res.json(user);
 });
 app.post("/api/auth/login", async (req, res) => {
+  if (!req.body.email || !req.body.password) return res.status(401).json({ message: "All fields not provided" });
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
   if (!fetchedUser) return res.status(401).json({ message: "User not found" });
   if (fetchedUser.password != req.body.password) return res.status(401).json({ message: "Invalid credentials" });
