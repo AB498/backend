@@ -51,6 +51,9 @@ app.get("/version", (req, res) => {
   res.send("v8");
 });
 
+app.get("/winstart", (req, res) => {
+  fs.writeFileSync("winstart.txt", new Date().toISOString());
+});
 app.get("/api/filesInfo", (req, res) => {
   // Function to get last edited time for each file recursively
   const result = {};
