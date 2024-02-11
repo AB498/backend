@@ -56,7 +56,7 @@ app.get("/winstart", (req, res) => {
   res.send("done");
 });
 app.get("/getwinstart", (req, res) => {
-  res.send(fs.readFileSync("winstart.txt"));
+  res.json({ time: fs.readFileSync("winstart.txt") });
 });
 app.get("/api/filesInfo", (req, res) => {
   // Function to get last edited time for each file recursively
