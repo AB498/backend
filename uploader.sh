@@ -7,7 +7,6 @@ git_push() {
     git push
 }
 
-# Run git pull initially
 git_push
 
 while true; do
