@@ -10,11 +10,34 @@ Content-Type: application/json
 https://ab498.glitch.me/getwinstart
 
 ###
+http://localhost:8000/api/user/search
+
 ###
+http://localhost:8000/api/product/search?q=a
 ###
+http://localhost:8000/api/order
 ###
+http://localhost:8000/api/order/my
 ###
+http://localhost:8000/api/user/reset
 ###
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "admin",
+    "email": "admin",
+    "password": "admin"
+}
+
+###
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin",
+    "password": "admin"
+}
 ###
 ###
 ###

@@ -53,8 +53,8 @@ body {
 :root {
   --color-btn-primary: #ffffff;
   --color-btn-secondary: #dbdbdb;
-  --color-border-primary: #f8dddd;
-  --color-border-secondary: #7c7c7c;
+  --color-border-primary: #7c7c7c;
+  --color-border-secondary: #5f5f5f;
   --color-bg-primary: #ffffff;
   --color-bg-secondary: #dfffff;
   --color-bg-tertiary: #e0e0e0;
@@ -69,8 +69,8 @@ body {
 body.dark {
   --color-btn-primary: rgb(20, 0, 135);
   --color-btn-secondary: rgb(0, 0, 0);
-  --color-border-primary: #7c7c7c;
   --color-border-secondary: #7c7c7c;
+  --color-border-primary: #5f5f5f;
   --color-bg-primary: #000000;
   --color-bg-secondary: #0f0f0f;
   --color-bg-tertiary: #222121;
@@ -110,13 +110,13 @@ body.dark {
 .special-title {
   display: block;
   width: 100%;
-  font-size: 16;
+  font-size: 24px;
   font-weight: bold;
   color: var(--color-text-primary);
-  text-transform: uppercase;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  cursor: pointer;
 }
 
 .special-title:hover {
@@ -173,8 +173,18 @@ body.dark {
 }
 
 .card-footer {
+  display: flex;
   padding: 10px;
   font-size: 14px;
+  gap: 5px;
+}
+
+.vr {
+  display: inline;
+  height: 100%;
+  width: 1px;
+  border: 1px inset;
+  margin: 5px;
 }
 
 .max-w-500 {

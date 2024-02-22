@@ -1,5 +1,7 @@
-const jwt = require("jsonwebtoken");
-const models = require("./models");
+const cookieParser = require("cookie-parser");
+const jsonwebtoken = require("jsonwebtoken");
+models = require("./models");
+const { Op } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
 const cors = require("cors");
@@ -29,10 +31,11 @@ let app = express();
 
 const directoryPath = "./static";
 
-if (!fs.existsSync(__dirname + "/../uploads")) fs.mkdirSync(__dirname + "/../uploads");
+if (!fs.existsSync(__dirname + "/uploads")) fs.mkdirSync(__dirname + "/uploads");
 app.use("/uploads", express.static(__dirname + "/uploads"));
 app.use("/", express.static(directoryPath));
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
@@ -88,20 +91,21 @@ app.get("/api/filesInfo", (req, res) => {
   res.json(lastEditedTimes);
 });
 
-crudSubjects = ["User", "Product"];
+crudSubjects = ["User", "Product", "Order"];
 
 for (let subject of crudSubjects) {
   const model = models[subject];
   const router = express.Router();
   router.get("/", async (req, res) => res.json(await model.findAll({})));
-  router.get("/:id", async (req, res) => res.json(await model.findOne({ where: { id: req.params.id } })));
+  router.get("/my", auth, async (req, res) => res.json(await model.findAll({ where: { user_id: req.user.id } })));
+  router.get("/id/:id", async (req, res) => res.json(await model.findOne({ where: { id: req.params.id } })));
   router.post("/", upload.array("files", 10), parseFormDataBody, async (req, res) => {
     // console.log('files', req.files.map(i => i.filename));
-    console.log("files", req.body);
-    let processedFiles = req.files.map(processFileForFileName);
+    console.log("body", req.body);
+    let processedFiles = req.files?.map(processFileForFileName) || [];
     const newItem = new model({
       ...req.body,
-      avatar: processedFiles[0],
+      avatar: processedFiles?.[0],
       images: processedFiles,
     });
     let added = (await newItem.save()).get({ plain: true });
@@ -126,17 +130,42 @@ for (let subject of crudSubjects) {
     const deleted = await model.destroy({ where: { id: req.params.id } });
     res.json(deleted);
   });
+
+  router.get("/search", async (req, res) => {
+    let { q, page, limit, offset, order, sort } = req.query;
+    console.log({ q, page, limit, offset, order, sort });
+    let where = {};
+    if (q) {
+      where = {
+        [Op.or]: [
+          ...Object.keys(model.rawAttributes).map((i) => ({
+            [i]: {
+              [Op.like]: `%${q}%`,
+            },
+          })),
+        ],
+      };
+    }
+    let items = await model.findAndCountAll({
+      where,
+      limit: parseInt(limit) || 10,
+      offset: parseInt(offset) || 0,
+      order: model.rawAttributes[sort] ? [[sort || "id", order || "asc"]] : null,
+    });
+    res.json(items);
+  });
+
   app.use(`/api/${subject.toLowerCase()}`, router);
 }
 
 function processFileForFileName(file) {
   // rename file to date.now
-  let name = `/uploads/${Date.now()}-${file.originalname}`;
+  let name = `/uploads/${uuid()}-${file.originalname}`;
   fs.renameSync(file.path, "." + name);
   return name;
 }
 function parseFormDataBody(req, res, next) {
-  req.body = JSON.parse(req.body.bodyString || "{}");
+  req.body = !req.body.bodyString ? req.body : JSON.parse(req.body.bodyString || "{}");
   next();
 }
 
@@ -145,12 +174,10 @@ app.post("/api/auth/register", async (req, res) => {
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
   if (fetchedUser) return res.status(401).json({ message: "User already exists" });
   let user = new models.User(req.body);
-  user.jwts = [jwt.sign({ id: user.id, email: user.email }, "secret")];
-  try {
-    await user.save();
-  } catch (err) {
-    console.log(err);
-  }
+  await user.save();
+  user.jwts = [jsonwebtoken.sign({ id: user.id, email: user.email }, "secret")];
+  await user.save();
+  res.cookie("jwt", user.jwts[0], { httpOnly: true });
   return res.json(user);
 });
 
@@ -159,8 +186,16 @@ app.post("/api/auth/login", async (req, res) => {
   let fetchedUser = await models.User.findOne({ where: { email: req.body.email || null } });
   if (!fetchedUser) return res.status(401).json({ message: "User not found" });
   if (fetchedUser.password != req.body.password) return res.status(401).json({ message: "Invalid credentials" });
-  let user = { ...fetchedUser, jwts: [...fetchedUser.jwts, jwt.sign({ id: fetchedUser.id, email: fetchedUser.email }, "secret")] };
+  let user = { ...fetchedUser.get({ plain: true }), jwts: [...fetchedUser.jwts, jsonwebtoken.sign({ id: fetchedUser.id, email: fetchedUser.email }, "secret")] };
+  res.cookie("jwt", user.jwts[0], { httpOnly: true });
   return res.json(user);
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err);
+  const statusCode = err.statusCode || 500;
+  res.status(statusCode).json({ error: err.message });
 });
 
 app.get("*", (req, res) => {
@@ -176,3 +211,32 @@ let port = 8000;
     console.log(`Server is running on port http://localhost:${port}`);
   });
 })();
+
+async function auth(req, res, next) {
+  try {
+    const jwt = req.headers?.authorization?.split(" ")[1] || req.cookies.jwt;
+    if (!jwt) {
+      return res.status(401).send("Unauthorized [No JWT]");
+    }
+    const decodedUser = jsonwebtoken.verify(jwt, "secret");
+
+    if (!decodedUser || !decodedUser.email || !decodedUser.id) {
+      console.log("Invalid JWT", req.headers?.authorization, decodedUser);
+      return res.status(401).send("Unauthorized");
+    }
+
+    const user = await models.User.findOne({ where: { id: decodedUser.id } });
+
+    if (!user || !user.jwts || !user.jwts.includes(jwt)) {
+      console.log("No user");
+      return res.status(401).send("Unauthorized");
+    }
+
+    req.user = user;
+    req.jwt = jwt;
+    next();
+  } catch (error) {
+    console.error("Authentication error:", error);
+    res.status(500).send("Internal Server Error");
+  }
+}

@@ -1,5 +1,5 @@
 const consoleWarn = console.error;
-const SUPPRESSED_WARNINGS = ["nvalid DOM property `class", 'Each child in a list should have a unique "key" prop'];
+const SUPPRESSED_WARNINGS = ["Warning: A component is changing an uncontrolled", "Warning: Invalid DOM property", 'Each child in a list should have a unique "key" prop'];
 
 console.error = function filterWarnings(msg, ...args) {
   if (!SUPPRESSED_WARNINGS.some((entry) => msg.includes(entry))) {
@@ -10,17 +10,24 @@ console.error = function filterWarnings(msg, ...args) {
 window.onerror = function (msg, url, lineNo, columnNo, error) {
   alertify.error(msg + "\n" + url + "\n" + lineNo + "\n" + columnNo + "\n" + error);
 };
+
+window.notify = alertify.success;
 let { Layout: TheFlexLayout, Model } = FlexLayout;
 
 const { useState, useEffect, useLayoutEffect, useRef, createContext, useContext, useMemo } = React;
 
 const { BrowserRouter, Link, Route, Routes, Switch, useHistory, useLocation, useParams, useRouteMatch } = ReactRouterDOM;
+function useQuery() {
+  const { search } = useLocation();
+  return React.useMemo(() => Object.fromEntries([...new URLSearchParams(search)]), [search]); // q.get("name")
+}
 
 function fakeUser() {
   return {
     avatar: faker.image.avatar(),
     name: faker.person.firstName(),
     email: faker.internet.email(),
+    password: faker.internet.password(),
     phone: faker.phone.number(),
     balance: faker.finance.amount(0, 1000, 2),
     bio: faker.person.bio(),
@@ -33,6 +40,10 @@ function fakeProduct() {
     price: faker.commerce.price(),
     description: faker.commerce.productDescription(),
   };
+}
+
+async function fakeImage() {
+  return await downloadImageAsBlob(faker.image.urlLoremFlickr({ category: "random" }));
 }
 
 let safeStringify = function (...args) {
@@ -159,7 +170,7 @@ let tryFetch = async (url, options = {}, log = false) => {
   options = {
     credentials: "include",
     headers:
-      options?.method === "GET"
+      options?.method == "GET"
         ? {}
         : {
             "Content-Type": "application/json",
@@ -168,16 +179,16 @@ let tryFetch = async (url, options = {}, log = false) => {
   };
   let res;
   try {
-    res = await fetch(BACKEND_URL + url, options);
-    res = await res.json();
+    let response = await fetch(BACKEND_URL + url, options);
+    res = await response.json();
     if (log) console.log(">", url, res);
-    return res;
+    return response.ok ? res : null;
   } catch (e) {
     try {
-      res = await fetch(BACKEND_URL + url, options);
-      res = await res.text();
+      let response = await fetch(BACKEND_URL + url, options);
+      res = await response.text();
       if (log) console.log(">", url, res);
-      return res;
+      return response.ok ? res : null;
     } catch (e) {
       console.log(">", url, e.message);
       return null;
@@ -331,7 +342,8 @@ let CustomModal = ({ open, onClose, children }) => {
     domReady &&
     ReactDOM.createPortal(
       show ? (
-        <div className={`${show ? "block" : "hidden"} grid place-items-center fixed top-0 left-0 z-50 h-screen w-screen bg-black/25 dark:bg-white/25 overscroll-none overflow-auto `} onClick={() => onClose && onClose(open)}>
+        // <div className={`${show ? "block" : "hidden"} grid place-items-center fixed top-0 left-0 z-50 h-screen w-screen bg-black/25 dark:bg-white/25 overscroll-none overflow-auto `} onClick={() => onClose && onClose(open)}>
+        <div className={`${show ? "flex" : "hidden"} border-8 flex flex-col items-center justify-center fixed top-0 left-0 z-50 h-screen w-screen bg-black/25 dark:bg-white/25 overscroll-none overflow-auto `} onClick={() => onClose && onClose(open)}>
           {Array.isArray(children) ? (
             children.map((item, index) => {
               return <item.type {...item.props} key={index} onClick={(e) => e.stopPropagation()} />;

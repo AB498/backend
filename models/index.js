@@ -38,11 +38,16 @@ const Product = sequelize.define("Product", {
   category: StringArrayType("category"),
   images: StringArrayType("images"),
 });
+const Order = sequelize.define("Order", {
+  name: DataTypes.STRING,
+  user_id: DataTypes.NUMBER,
+  product_ids: StringArrayType("product_ids"),
+  status: { type: DataTypes.STRING, defaultValue: "pending" },
+});
 
 async function init() {
-  await sequelize.sync({
-    force: true,
-  });
+  [].forEach((model) => model.sync({ alter: true, force: true }));
+  await sequelize.sync();
 }
 
-module.exports = { init, sequelize, User, Product };
+module.exports = { init, sequelize, User, Product, Order };
