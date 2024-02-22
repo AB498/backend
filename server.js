@@ -204,7 +204,7 @@ app.get("*", (req, res) => {
 });
 
 // host 0.0.0.0
-let port = 80;
+let port = process.env.PORT || 80;
 (async () => {
   await models.init();
   app.listen(port, () => {
